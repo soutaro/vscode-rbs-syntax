@@ -3,6 +3,7 @@
     "publisher": "hanachin",
     "displayName": "ruby-signature",
     "description": "",
+    "homepage": "https://github.com/hanachin/vscode-ruby-signature/",
     "repository": {
         "type": "git",
         "url": "https://github.com/hanachin/vscode-ruby-signature.git"
