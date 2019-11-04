@@ -22,7 +22,15 @@
 			"patterns": [
 				{
 					"name": "keyword.control.class.ruby-signature",
-					"match": "\\b(class)\\b"
+					"match": "\\b(class)\\s+([A-Z][a-zA-Z]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.class.ruby-signature"
+						},
+						"2": {
+							"name": "entity.name.class"
+						}
+					}
 				},
 				{
 					"name": "keyword.control.type.ruby-signature",
@@ -82,7 +90,15 @@
 				},
 				{
 					"name": "keyword.control.interface.ruby-signature",
-					"match": "\\b(interface)\\b"
+					"match": "\\b(interface)\\s(_[a-zA-Z]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.interface.ruby-signature"
+						},
+						"2": {
+							"name": "entity.name.class"
+						}
+					}
 				},
 				{
 					"name": "keyword.control.end.ruby-signature",
@@ -90,7 +106,15 @@
 				},
 				{
 					"name": "keyword.control.include.ruby-signature",
-					"match": "\\b(include)\\b"
+					"match": "\\b(include)\\s([A-Z][a-zA-Z]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.include.ruby-signature"
+						},
+						"2": {
+							"name": "variable.other.constant.ruby-signature"
+						}
+					}
 				},
 				{
 					"name": "keyword.control.extend.ruby-signature",
@@ -102,7 +126,15 @@
 				},
 				{
 					"name": "keyword.control.module.ruby-signature",
-					"match": "\\b(module)\\b"
+					"match": "\\b(module)\\s+([A-Z][a-zA-Z]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.module.ruby-signature"
+						},
+						"2": {
+							"name": "entity.name.class"
+						}
+					}
 				},
 				{
 					"name": "keyword.control.attr_reader.ruby-signature",
