@@ -1,0 +1,25 @@
+{
+    "name": "ruby-signature",
+    "displayName": "ruby-signature",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.39.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ruby-signature",
+            "aliases": ["rbs", "ruby-signature"],
+            "extensions": [".rbs"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ruby-signature",
+            "scopeName": "source.ruby-signature",
+            "path": "./syntaxes/ruby-signature.tmLanguage.json"
+        }]
+    }
+}
