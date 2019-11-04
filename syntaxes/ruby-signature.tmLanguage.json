@@ -3,6 +3,9 @@
 	"name": "rbs",
 	"patterns": [
 		{
+			"include": "#comments"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -10,11 +13,146 @@
 		}
 	],
 	"repository": {
+		"comments": {
+			"name": "comment.line.number-sign",
+			"begin": "#",
+			"end": "\n"
+		},
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.ruby-signature",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.class.ruby-signature",
+					"match": "\\b(class)\\b"
+				},
+				{
+					"name": "keyword.control.type.ruby-signature",
+					"match": "\\b(type)\\b"
+				},
+				{
+					"name": "keyword.control.def.ruby-signature",
+					"match": "\\b(def)\\b([^:]+)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.def.ruby-signature"
+						},
+						"2": {
+							"name": "entity.name.function.ruby-signature"
+						}
+					}
+				},
+				{
+					"name": "keyword.control.self.ruby-signature",
+					"match": "\\b(self)\\b"
+				},
+				{
+					"name": "keyword.control.void.ruby-signature",
+					"match": "\\b(void)\\b"
+				},
+				{
+					"name": "keyword.control.any.ruby-signature",
+					"match": "\\b(any)\\b"
+				},
+				{
+					"name": "keyword.control.untyped.ruby-signature",
+					"match": "\\b(untyped)\\b"
+				},
+				{
+					"name": "keyword.control.top.ruby-signature",
+					"match": "\\b(top)\\b"
+				},
+				{
+					"name": "keyword.control.bot.ruby-signature",
+					"match": "\\b(bot)\\b"
+				},
+				{
+					"name": "keyword.control.instance.ruby-signature",
+					"match": "\\b(instance)\\b"
+				},
+				{
+					"name": "keyword.control.bool.ruby-signature",
+					"match": "\\b(bool)\\b"
+				},
+				{
+					"name": "keyword.control.nil.ruby-signature",
+					"match": "\\b(nil)\\b"
+				},
+				{
+					"name": "keyword.control.singleton.ruby-signature",
+					"match": "\\b(singleton)\\b"
+				},
+				{
+					"name": "keyword.control.interface.ruby-signature",
+					"match": "\\b(interface)\\b"
+				},
+				{
+					"name": "keyword.control.end.ruby-signature",
+					"match": "\\b(end)\\b"
+				},
+				{
+					"name": "keyword.control.include.ruby-signature",
+					"match": "\\b(include)\\b"
+				},
+				{
+					"name": "keyword.control.extend.ruby-signature",
+					"match": "\\b(extend)\\b"
+				},
+				{
+					"name": "keyword.control.prepend.ruby-signature",
+					"match": "\\b(prepend)\\b"
+				},
+				{
+					"name": "keyword.control.module.ruby-signature",
+					"match": "\\b(module)\\b"
+				},
+				{
+					"name": "keyword.control.attr_reader.ruby-signature",
+					"match": "\\b(attr_reader)\\b"
+				},
+				{
+					"name": "keyword.control.attr_writer.ruby-signature",
+					"match": "\\b(attr_writer)\\b"
+				},
+				{
+					"name": "keyword.control.attr_accessor.ruby-signature",
+					"match": "\\b(attr_accessor)\\b"
+				},
+				{
+					"name": "keyword.control.super.ruby-signature",
+					"match": "\\b(super)\\b"
+				},
+				{
+					"name": "keyword.control.public.ruby-signature",
+					"match": "\\b(public)\\b"
+				},
+				{
+					"name": "keyword.control.private.ruby-signature",
+					"match": "\\b(private)\\b"
+				},
+				{
+					"name": "keyword.control.alias.ruby-signature",
+					"match": "\\b(alias)\\b"
+				},
+				{
+					"name": "keyword.control.extension.ruby-signature",
+					"match": "\\b(extension)\\b"
+				},
+				{
+					"name": "keyword.control.incompatible.ruby-signature",
+					"match": "\\b(incompatible)\\b"
+				},
+				{
+					"name": "keyword.control.unchecked.ruby-signature",
+					"match": "\\b(unchecked)\\b"
+				},
+				{
+					"name": "keyword.control.out.ruby-signature",
+					"match": "\\b(out)\\b"
+				},
+				{
+					"name": "keyword.control.in.ruby-signature",
+					"match": "\\b(in)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.ruby-signature",
