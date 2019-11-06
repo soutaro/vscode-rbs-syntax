@@ -6,21 +6,31 @@ import {
 	TextDocument,
 	TextEdit,
 	OnTypeFormattingEditProvider,
+	Range,
 	Position,
 	ProviderResult,
 } from 'vscode';
 
-class IndentationProvider implements OnTypeFormattingEditProvider {
+class InsertOrDeleteBarProvider implements OnTypeFormattingEditProvider {
 	provideOnTypeFormattingEdits(document: TextDocument, position: Position, ch: string, options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
 		if (document.lineAt(position.line).text.substring(position.character).length) {
 			return
 		}
 
-		const m = document.lineAt(position.line - 1).text.match(/^(\s*def [^:]+):/);
-		if (m) {
-			const indentSize = m[1].length - (options.insertSpaces ? options.tabSize : 0);
-			const textEvent = TextEdit.insert(position, ' '.repeat(indentSize) + '| ')
-			return Promise.resolve([textEvent])
+		const prevLine = document.lineAt(position.line - 1)
+		const def = prevLine.text.match(/^(\s*def [^:]+):/)
+		if (def) {
+			const indentSize = def[1].length - options.tabSize;
+			const insertBar = TextEdit.insert(position, ' '.repeat(indentSize) + '| ')
+			return Promise.resolve([insertBar])
+		}
+
+		if (/^(\s*\|\s*)$/.test(prevLine.text)) {
+			const deleteEmptyType = TextEdit.delete(prevLine.range)
+			const indentRange = document.lineAt(position.line).range
+			const deleteIndent = TextEdit.delete(indentRange)
+			const insertIndent = TextEdit.insert(new Position(position.line, 0), ' '.repeat(options.tabSize))
+			return Promise.resolve([deleteEmptyType, deleteIndent, insertIndent])
 		}
 	}
 }
@@ -29,7 +39,7 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
 		languages.registerOnTypeFormattingEditProvider(
 			'ruby-signature',
-			new IndentationProvider(),
+			new InsertOrDeleteBarProvider(),
 			"\n"
 		)
 	)
