@@ -10,59 +10,98 @@ import {
 	Position,
 	ProviderResult,
 	TextLine,
+	IndentAction,
 } from 'vscode';
 
-class InsertOrDeleteBarProvider implements OnTypeFormattingEditProvider {
-  matchDef(line: TextLine): RegExpMatchArray | null {
-		return line.text.match(/^(\s*)(def [^:]+):/)
+class NewLineIndentProvider implements OnTypeFormattingEditProvider {
+	matchDefOrType(line: TextLine): RegExpMatchArray | null {
+		return line.text.match(/^(\s*)((def [^:]+:)|(type [^=]+=))/)
 	}
 
-	matchBar(line: TextLine): RegExpMatchArray | null {
-		return line.text.match(/^(\s*\|\s*)$/)
+	matchEmptyLine(line: TextLine): RegExpMatchArray | null {
+		return line.text.match(/^\s*$/)
 	}
 
-	formatBarAfterDef(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
+	matchBlockDelimiter(line: TextLine): RegExpMatchArray | null {
+		return line.text.match(/^\s*end$/) || line.text.match(/^\s*(class|interface|module)\b/)
+	}
+
+	indentForDefOrType(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
 		const prevLine = document.lineAt(position.line - 1)
-		const def = this.matchDef(document.lineAt(position.line - 1))
-		if (!def) return
+		const d = this.matchDefOrType(document.lineAt(position.line - 1))
+		if (!d) return
 
-		const indentSize = def[2].length;
-		const insertBar = TextEdit.insert(position, ' '.repeat(indentSize) + '| ')
-		return Promise.resolve([insertBar])
+		const indentSize = d[2].length - 1;
+		const insertSpace = TextEdit.insert(position, ' '.repeat(indentSize))
+		return Promise.resolve([insertSpace])
 	}
 
-	formatLineAfterBar(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
+	outdentToMember(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
 		const prevLine = document.lineAt(position.line - 1)
-		const bar = this.matchBar(prevLine)
-		if (!bar) return
+		const empty = this.matchEmptyLine(prevLine)
+		if (!empty) return
 
-		const prevPrevLine = document.lineAt(position.line - 2)
-		const def = this.matchDef(prevPrevLine)
-		if (!def) return
+		let memberLine = position.line - 2
+		while (memberLine > 0) {
+			const line = document.lineAt(memberLine)
 
-		const deleteEmptyType = TextEdit.delete(prevLine.range)
-		const indentRange = document.lineAt(position.line).range
-		const deleteIndent = TextEdit.delete(indentRange)
-		const insertIndent = TextEdit.insert(new Position(position.line, 0), ' '.repeat(def[1].length))
+			if (this.matchBlockDelimiter(line)) {
+				return
+			}
 
-		return Promise.resolve([deleteEmptyType, deleteIndent, insertIndent])
+			const match = this.matchDefOrType(line)
+			if (match) {
+				const leadingSpaces = match[1]
+
+				if (leadingSpaces.length >= position.character) {
+					return
+				}
+
+				const range = new Range(position.translate(undefined, leadingSpaces.length - position.character), position)
+				const outdent = TextEdit.delete(range)
+		
+				return Promise.resolve([outdent])
+			} else {
+				memberLine--;
+			}
+		}
 	}
 
 	provideOnTypeFormattingEdits(document: TextDocument, position: Position, ch: string, options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
-		if (document.lineAt(position.line).text.substring(position.character).length) {
+		if (document.lineAt(position.line).text.substring(position.character).length > 0) {
 			return
 		}
 
-		return this.formatBarAfterDef(document, position) || this.formatLineAfterBar(document, position)
-	}
+		return this.indentForDefOrType(document, position) || this.outdentToMember(document, position)
+
+		return
+	}	
 }
 
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
 		languages.registerOnTypeFormattingEditProvider(
 			'ruby-signature',
-			new InsertOrDeleteBarProvider(),
+			new NewLineIndentProvider(),
 			"\n"
+		)
+	)
+
+	context.subscriptions.push(
+		languages.setLanguageConfiguration(
+			"ruby-signature", 
+			{
+				indentationRules: {
+					increaseIndentPattern: /^(\s*)(class|module|interface)\b/,
+					decreaseIndentPattern: /^(\s*)end/
+				},
+				onEnterRules: [
+					{
+						beforeText: /^\s*#/,
+						action: { indentAction: IndentAction.None, appendText: "# " }
+					}
+				]
+			}
 		)
 	)
 }
