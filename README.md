@@ -18,6 +18,10 @@ Not supported some syntax highlight. (e.g. `->`)
 
 ## Release Notes
 
+### 0.0.3
+
+Not released yet.
+
 ### 0.0.2
 
 Improve formatting of |
