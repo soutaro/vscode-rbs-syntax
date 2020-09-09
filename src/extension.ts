@@ -72,8 +72,6 @@ class NewLineIndentProvider implements OnTypeFormattingEditProvider {
 		}
 
 		return this.indentForDefOrType(document, position) || this.outdentToMember(document, position)
-
-		return
 	}	
 }
 
