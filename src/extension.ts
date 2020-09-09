@@ -27,7 +27,6 @@ class NewLineIndentProvider implements OnTypeFormattingEditProvider {
 	}
 
 	indentForDefOrType(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
-		const prevLine = document.lineAt(position.line - 1)
 		const d = this.matchDefOrType(document.lineAt(position.line - 1))
 		if (!d) return
 
