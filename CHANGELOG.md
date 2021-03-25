@@ -6,7 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-* Not released yet.
+* Rename to `RBS Syntax` ([\#5](https://github.com/soutaro/vscode-rbs-syntax/pull/5))
+* Transfered from @hanachin to @soutaro
 
 ### [0.0.2]
 
