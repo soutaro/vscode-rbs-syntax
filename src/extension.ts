@@ -58,7 +58,7 @@ class NewLineIndentProvider implements OnTypeFormattingEditProvider {
 
 				const range = new Range(position.translate(undefined, leadingSpaces.length - position.character), position)
 				const outdent = TextEdit.delete(range)
-		
+
 				return Promise.resolve([outdent])
 			} else {
 				memberLine--;
@@ -72,13 +72,13 @@ class NewLineIndentProvider implements OnTypeFormattingEditProvider {
 		}
 
 		return this.indentForDefOrType(document, position) || this.outdentToMember(document, position)
-	}	
+	}
 }
 
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
 		languages.registerOnTypeFormattingEditProvider(
-			'ruby-signature',
+			'rbs',
 			new NewLineIndentProvider(),
 			"\n"
 		)
@@ -86,7 +86,7 @@ export function activate(context: ExtensionContext) {
 
 	context.subscriptions.push(
 		languages.setLanguageConfiguration(
-			"ruby-signature", 
+			"rbs",
 			{
 				indentationRules: {
 					increaseIndentPattern: /^(\s*)(class|module|interface)\b/,

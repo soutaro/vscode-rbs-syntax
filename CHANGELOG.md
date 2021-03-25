@@ -6,4 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-- Initial release
+* Not released yet.
+
+### [0.0.2]
+
+* Improve formatting of |
+
+### [0.0.1]
+
+* Initial release of ruby-signature
