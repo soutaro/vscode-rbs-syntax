@@ -21,11 +21,11 @@
 		"keywords": {
 			"patterns": [
 				{
-					"name": "keyword.control.class.ruby-signature",
+					"name": "keyword.control.class.rbs",
 					"match": "\\b(class)\\s+([A-Z][a-zA-Z]*)",
 					"captures": {
 						"1": {
-							"name": "keyword.control.class.ruby-signature"
+							"name": "keyword.control.class.rbs"
 						},
 						"2": {
 							"name": "entity.name.class"
@@ -33,67 +33,67 @@
 					}
 				},
 				{
-					"name": "keyword.control.type.ruby-signature",
+					"name": "keyword.control.type.rbs",
 					"match": "\\b(type)\\b"
 				},
 				{
-					"name": "keyword.control.def.ruby-signature",
+					"name": "keyword.control.def.rbs",
 					"match": "\\b(def)\\b([^:]+)",
 					"captures": {
 						"1": {
-							"name": "keyword.control.def.ruby-signature"
+							"name": "keyword.control.def.rbs"
 						},
 						"2": {
-							"name": "entity.name.function.ruby-signature"
+							"name": "entity.name.function.rbs"
 						}
 					}
 				},
 				{
-					"name": "keyword.control.self.ruby-signature",
+					"name": "keyword.control.self.rbs",
 					"match": "\\b(self)\\b"
 				},
 				{
-					"name": "keyword.control.void.ruby-signature",
+					"name": "keyword.control.void.rbs",
 					"match": "\\b(void)\\b"
 				},
 				{
-					"name": "keyword.control.any.ruby-signature",
+					"name": "keyword.control.any.rbs",
 					"match": "\\b(any)\\b"
 				},
 				{
-					"name": "keyword.control.untyped.ruby-signature",
+					"name": "keyword.control.untyped.rbs",
 					"match": "\\b(untyped)\\b"
 				},
 				{
-					"name": "keyword.control.top.ruby-signature",
+					"name": "keyword.control.top.rbs",
 					"match": "\\b(top)\\b"
 				},
 				{
-					"name": "keyword.control.bot.ruby-signature",
+					"name": "keyword.control.bot.rbs",
 					"match": "\\b(bot)\\b"
 				},
 				{
-					"name": "keyword.control.instance.ruby-signature",
+					"name": "keyword.control.instance.rbs",
 					"match": "\\b(instance)\\b"
 				},
 				{
-					"name": "keyword.control.bool.ruby-signature",
+					"name": "keyword.control.bool.rbs",
 					"match": "\\b(bool)\\b"
 				},
 				{
-					"name": "keyword.control.nil.ruby-signature",
+					"name": "keyword.control.nil.rbs",
 					"match": "\\b(nil)\\b"
 				},
 				{
-					"name": "keyword.control.singleton.ruby-signature",
+					"name": "keyword.control.singleton.rbs",
 					"match": "\\b(singleton)\\b"
 				},
 				{
-					"name": "keyword.control.interface.ruby-signature",
+					"name": "keyword.control.interface.rbs",
 					"match": "\\b(interface)\\s(_[a-zA-Z]*)",
 					"captures": {
 						"1": {
-							"name": "keyword.control.interface.ruby-signature"
+							"name": "keyword.control.interface.rbs"
 						},
 						"2": {
 							"name": "entity.name.class"
@@ -101,35 +101,35 @@
 					}
 				},
 				{
-					"name": "keyword.control.end.ruby-signature",
+					"name": "keyword.control.end.rbs",
 					"match": "\\b(end)\\b"
 				},
 				{
-					"name": "keyword.control.include.ruby-signature",
+					"name": "keyword.control.include.rbs",
 					"match": "\\b(include)\\s([A-Z][a-zA-Z]*)",
 					"captures": {
 						"1": {
-							"name": "keyword.control.include.ruby-signature"
+							"name": "keyword.control.include.rbs"
 						},
 						"2": {
-							"name": "variable.other.constant.ruby-signature"
+							"name": "variable.other.constant.rbs"
 						}
 					}
 				},
 				{
-					"name": "keyword.control.extend.ruby-signature",
+					"name": "keyword.control.extend.rbs",
 					"match": "\\b(extend)\\b"
 				},
 				{
-					"name": "keyword.control.prepend.ruby-signature",
+					"name": "keyword.control.prepend.rbs",
 					"match": "\\b(prepend)\\b"
 				},
 				{
-					"name": "keyword.control.module.ruby-signature",
+					"name": "keyword.control.module.rbs",
 					"match": "\\b(module)\\s+([A-Z][a-zA-Z]*)",
 					"captures": {
 						"1": {
-							"name": "keyword.control.module.ruby-signature"
+							"name": "keyword.control.module.rbs"
 						},
 						"2": {
 							"name": "entity.name.class"
@@ -137,66 +137,66 @@
 					}
 				},
 				{
-					"name": "keyword.control.attr_reader.ruby-signature",
+					"name": "keyword.control.attr_reader.rbs",
 					"match": "\\b(attr_reader)\\b"
 				},
 				{
-					"name": "keyword.control.attr_writer.ruby-signature",
+					"name": "keyword.control.attr_writer.rbs",
 					"match": "\\b(attr_writer)\\b"
 				},
 				{
-					"name": "keyword.control.attr_accessor.ruby-signature",
+					"name": "keyword.control.attr_accessor.rbs",
 					"match": "\\b(attr_accessor)\\b"
 				},
 				{
-					"name": "keyword.control.super.ruby-signature",
+					"name": "keyword.control.super.rbs",
 					"match": "\\b(super)\\b"
 				},
 				{
-					"name": "keyword.control.public.ruby-signature",
+					"name": "keyword.control.public.rbs",
 					"match": "\\b(public)\\b"
 				},
 				{
-					"name": "keyword.control.private.ruby-signature",
+					"name": "keyword.control.private.rbs",
 					"match": "\\b(private)\\b"
 				},
 				{
-					"name": "keyword.control.alias.ruby-signature",
+					"name": "keyword.control.alias.rbs",
 					"match": "\\b(alias)\\b"
 				},
 				{
-					"name": "keyword.control.extension.ruby-signature",
+					"name": "keyword.control.extension.rbs",
 					"match": "\\b(extension)\\b"
 				},
 				{
-					"name": "keyword.control.incompatible.ruby-signature",
+					"name": "keyword.control.incompatible.rbs",
 					"match": "\\b(incompatible)\\b"
 				},
 				{
-					"name": "keyword.control.unchecked.ruby-signature",
+					"name": "keyword.control.unchecked.rbs",
 					"match": "\\b(unchecked)\\b"
 				},
 				{
-					"name": "keyword.control.out.ruby-signature",
+					"name": "keyword.control.out.rbs",
 					"match": "\\b(out)\\b"
 				},
 				{
-					"name": "keyword.control.in.ruby-signature",
+					"name": "keyword.control.in.rbs",
 					"match": "\\b(in)\\b"
 				}
 			]
 		},
 		"strings": {
-			"name": "string.quoted.double.ruby-signature",
+			"name": "string.quoted.double.rbs",
 			"begin": "\"",
 			"end": "\"",
 			"patterns": [
 				{
-					"name": "constant.character.escape.ruby-signature",
+					"name": "constant.character.escape.rbs",
 					"match": "\\\\."
 				}
 			]
 		}
 	},
-	"scopeName": "source.ruby-signature"
+	"scopeName": "source.rbs"
 }

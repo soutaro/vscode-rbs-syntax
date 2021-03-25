@@ -1,12 +1,12 @@
 {
-    "name": "ruby-signature",
-    "publisher": "hanachin",
-    "displayName": "ruby-signature",
+    "name": "rbs-syntax",
+    "publisher": "soutaro",
+    "displayName": "RBS Syntax",
     "description": "",
-    "homepage": "https://github.com/hanachin/vscode-ruby-signature/",
+    "homepage": "https://github.com/soutaro/vscode-rbs-syntax",
     "repository": {
         "type": "git",
-        "url": "https://github.com/hanachin/vscode-ruby-signature.git"
+        "url": "https://github.com/soutaro/vscode-rbs-syntax.git"
     },
     "version": "0.0.3",
     "engines": {
@@ -16,13 +16,14 @@
         "Programming Languages"
     ],
     "activationEvents": [
-        "onLanguage:ruby-signature"
+        "onLanguage:ruby-signature",
+        "onLanguage:rbs"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "languages": [
             {
-                "id": "ruby-signature",
+                "id": "rbs",
                 "aliases": [
                     "rbs",
                     "ruby-signature"
@@ -35,13 +36,13 @@
         ],
         "grammars": [
             {
-                "language": "ruby-signature",
-                "scopeName": "source.ruby-signature",
-                "path": "./syntaxes/ruby-signature.tmLanguage.json"
+                "language": "rbs",
+                "scopeName": "source.rbs",
+                "path": "./syntaxes/rbs.tmLanguage.json"
             }
         ],
         "configurationDefaults": {
-            "[ruby-signature]": {
+            "[rbs]": {
                 "editor.tabSize": 2,
                 "editor.insertSpaces": true,
                 "editor.detectIndentation": false,
@@ -63,8 +64,8 @@
         "@types/vscode": "^1.39.0",
         "glob": "^7.1.5",
         "mocha": "^6.2.2",
-        "typescript": "^3.6.4",
         "tslint": "^5.20.0",
+        "typescript": "^3.6.4",
         "vscode-test": "^1.2.2"
     }
 }

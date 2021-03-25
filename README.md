@@ -1,31 +1,8 @@
-# ruby-signature
+# RBS Syntax
 
-## Features
+RBS Syntax is a syntax support for [RBS](https://github.com/ruby/rbs) files. It implements basic syntax highlighting and indentation support.
 
-Syntax Highlight [ruby-signature(rbs)](https://github.com/ruby/rbs)
+![Screenshot](screenshot.png)
 
-## Requirements
+RBS Syntax was originally developed by [@hanachin](https://github.com/hanachin) and transfered at Mar 25, 2021. The repository was `hanachin/vscode-ruby-signature` and the extension was distributed as [ruby-signature](https://marketplace.visualstudio.com/items?itemName=hanachin.ruby-signature). [@soutaro](https://github.com/soutaro) is the new maintainer.
 
-Nothing.
-
-## Extension Settings
-
-There is no configuration.
-
-## Known Issues
-
-Not supported some syntax highlight. (e.g. `->`)
-
-## Release Notes
-
-### 0.0.3
-
-Not released yet.
-
-### 0.0.2
-
-Improve formatting of |
-
-### 0.0.1
-
-Initial release of ruby-signature
