@@ -8,7 +8,7 @@
         "type": "git",
         "url": "https://github.com/soutaro/vscode-rbs-syntax.git"
     },
-    "version": "0.0.3",
+    "version": "0.1.0",
     "engines": {
         "vscode": "^1.39.0"
     },
