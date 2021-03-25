@@ -1,9 +1,5 @@
 # Change Log
 
-All notable changes to the "ruby-signature" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
 ## [0.1.0] - 2021-03-26
 
 * Rename to `RBS Syntax` ([\#5](https://github.com/soutaro/vscode-rbs-syntax/pull/5))
