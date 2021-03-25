@@ -2,7 +2,7 @@
 
 ## Features
 
-Syntax Highlight [ruby-signature](https://github.com/ruby/ruby-signature)
+Syntax Highlight [ruby-signature(rbs)](https://github.com/ruby/rbs)
 
 ## Requirements
 
