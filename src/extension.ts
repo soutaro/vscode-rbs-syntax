@@ -9,38 +9,96 @@ import {
 	Range,
 	Position,
 	ProviderResult,
+	TextLine,
+	IndentAction,
 } from 'vscode';
 
-class InsertOrDeleteBarProvider implements OnTypeFormattingEditProvider {
+class NewLineIndentProvider implements OnTypeFormattingEditProvider {
+	matchDefOrType(line: TextLine): RegExpMatchArray | null {
+		return line.text.match(/^(\s*)((def [^:]+:)|(type [^=]+=))/)
+	}
+
+	matchEmptyLine(line: TextLine): RegExpMatchArray | null {
+		return line.text.match(/^\s*$/)
+	}
+
+	matchBlockDelimiter(line: TextLine): RegExpMatchArray | null {
+		return line.text.match(/^\s*end$/) || line.text.match(/^\s*(class|interface|module)\b/)
+	}
+
+	indentForDefOrType(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
+		const d = this.matchDefOrType(document.lineAt(position.line - 1))
+		if (!d) return
+
+		const indentSize = d[2].length - 1;
+		const insertSpace = TextEdit.insert(position, ' '.repeat(indentSize))
+		return Promise.resolve([insertSpace])
+	}
+
+	outdentToMember(document: TextDocument, position: Position): ProviderResult<TextEdit[]> | null {
+		const prevLine = document.lineAt(position.line - 1)
+		const empty = this.matchEmptyLine(prevLine)
+		if (!empty) return
+
+		let memberLine = position.line - 2
+		while (memberLine > 0) {
+			const line = document.lineAt(memberLine)
+
+			if (this.matchBlockDelimiter(line)) {
+				return
+			}
+
+			const match = this.matchDefOrType(line)
+			if (match) {
+				const leadingSpaces = match[1]
+
+				if (leadingSpaces.length >= position.character) {
+					return
+				}
+
+				const range = new Range(position.translate(undefined, leadingSpaces.length - position.character), position)
+				const outdent = TextEdit.delete(range)
+		
+				return Promise.resolve([outdent])
+			} else {
+				memberLine--;
+			}
+		}
+	}
+
 	provideOnTypeFormattingEdits(document: TextDocument, position: Position, ch: string, options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
-		if (document.lineAt(position.line).text.substring(position.character).length) {
+		if (document.lineAt(position.line).text.substring(position.character).length > 0) {
 			return
 		}
 
-		const prevLine = document.lineAt(position.line - 1)
-		const def = prevLine.text.match(/^(\s*def [^:]+):/)
-		if (def) {
-			const indentSize = def[1].length - options.tabSize;
-			const insertBar = TextEdit.insert(position, ' '.repeat(indentSize) + '| ')
-			return Promise.resolve([insertBar])
-		}
-
-		if (/^(\s*\|\s*)$/.test(prevLine.text)) {
-			const deleteEmptyType = TextEdit.delete(prevLine.range)
-			const indentRange = document.lineAt(position.line).range
-			const deleteIndent = TextEdit.delete(indentRange)
-			const insertIndent = TextEdit.insert(new Position(position.line, 0), ' '.repeat(options.tabSize))
-			return Promise.resolve([deleteEmptyType, deleteIndent, insertIndent])
-		}
-	}
+		return this.indentForDefOrType(document, position) || this.outdentToMember(document, position)
+	}	
 }
 
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
 		languages.registerOnTypeFormattingEditProvider(
 			'ruby-signature',
-			new InsertOrDeleteBarProvider(),
+			new NewLineIndentProvider(),
 			"\n"
+		)
+	)
+
+	context.subscriptions.push(
+		languages.setLanguageConfiguration(
+			"ruby-signature", 
+			{
+				indentationRules: {
+					increaseIndentPattern: /^(\s*)(class|module|interface)\b/,
+					decreaseIndentPattern: /^(\s*)end/
+				},
+				onEnterRules: [
+					{
+						beforeText: /^\s*#/,
+						action: { indentAction: IndentAction.None, appendText: "# " }
+					}
+				]
+			}
 		)
 	)
 }
