@@ -22,7 +22,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.class.rbs",
-					"match": "\\b(class)\\s+([A-Z][a-zA-Z]*)",
+					"match": "\\b(class)\\s+([A-Z]\\w*)",
 					"captures": {
 						"1": {
 							"name": "keyword.control.class.rbs"
@@ -90,7 +90,7 @@
 				},
 				{
 					"name": "keyword.control.interface.rbs",
-					"match": "\\b(interface)\\s(_[a-zA-Z]*)",
+					"match": "\\b(interface)\\s+(_[A-Z]\\w*)",
 					"captures": {
 						"1": {
 							"name": "keyword.control.interface.rbs"
@@ -106,7 +106,7 @@
 				},
 				{
 					"name": "keyword.control.include.rbs",
-					"match": "\\b(include)\\s([A-Z][a-zA-Z]*)",
+					"match": "\\b(include)\\s+(_?[A-Z]\\w*)",
 					"captures": {
 						"1": {
 							"name": "keyword.control.include.rbs"
@@ -118,15 +118,31 @@
 				},
 				{
 					"name": "keyword.control.extend.rbs",
-					"match": "\\b(extend)\\b"
+					"match": "\\b(extend)\\s+(_?[A-Z]\\w*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.extend.rbs"
+						},
+						"2": {
+							"name": "variable.other.constant.rbs"
+						}
+					}
 				},
 				{
 					"name": "keyword.control.prepend.rbs",
-					"match": "\\b(prepend)\\b"
+					"match": "\\b(prepend)\\s+([A-Z]\\w*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.prepend.rbs"
+						},
+						"2": {
+							"name": "variable.other.constant.rbs"
+						}
+					}
 				},
 				{
 					"name": "keyword.control.module.rbs",
-					"match": "\\b(module)\\s+([A-Z][a-zA-Z]*)",
+					"match": "\\b(module)\\s+([A-Z]\\w*)",
 					"captures": {
 						"1": {
 							"name": "keyword.control.module.rbs"
