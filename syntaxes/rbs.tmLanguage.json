@@ -57,10 +57,6 @@
 					"match": "\\b(void)\\b"
 				},
 				{
-					"name": "keyword.control.any.rbs",
-					"match": "\\b(any)\\b"
-				},
-				{
 					"name": "keyword.control.untyped.rbs",
 					"match": "\\b(untyped)\\b"
 				},
@@ -165,10 +161,6 @@
 					"match": "\\b(attr_accessor)\\b"
 				},
 				{
-					"name": "keyword.control.super.rbs",
-					"match": "\\b(super)\\b"
-				},
-				{
 					"name": "keyword.control.public.rbs",
 					"match": "\\b(public)\\b"
 				},
@@ -179,14 +171,6 @@
 				{
 					"name": "keyword.control.alias.rbs",
 					"match": "\\b(alias)\\b"
-				},
-				{
-					"name": "keyword.control.extension.rbs",
-					"match": "\\b(extension)\\b"
-				},
-				{
-					"name": "keyword.control.incompatible.rbs",
-					"match": "\\b(incompatible)\\b"
 				},
 				{
 					"name": "keyword.control.unchecked.rbs",
