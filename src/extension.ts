@@ -11,6 +11,9 @@ import {
 	ProviderResult,
 	TextLine,
 	IndentAction,
+	DocumentSymbolProvider,
+	SymbolKind,
+	DocumentSymbol,
 } from 'vscode';
 
 class NewLineIndentProvider implements OnTypeFormattingEditProvider {
@@ -75,12 +78,89 @@ class NewLineIndentProvider implements OnTypeFormattingEditProvider {
 	}
 }
 
+class RbsDocumentSymbolProvider implements DocumentSymbolProvider {
+	provideDocumentSymbols(document: TextDocument, token: CancellationToken): ProviderResult<DocumentSymbol[]> {
+		const symbols: DocumentSymbol[] = []
+		const iter = this.eachLine(document)
+
+		while (!iter.eof()) {
+			const parsed = this.parse(iter)
+			symbols.push(...parsed)
+		}
+
+		return symbols
+	}
+
+	parse(iter: { next: () => TextLine | null, eof: () => boolean, prev: () => TextLine }): DocumentSymbol[] {
+		const symbols: DocumentSymbol[] = []
+
+		while (true) {
+			const line = iter.next()
+			if (line === null || line.text.match(/^\s*end\s*$/)) {
+				break
+			}
+
+			let match: RegExpMatchArray | null
+			if (match = line.text.match(/^(\s*)(class|module|interface)\s+(_?[A-Z]\w*)/)) {
+				const indent = match[1]
+				const kind = match[2]
+				const name = match[3]
+
+				const symKind = kind === "class" ? SymbolKind.Class : kind === "module" ? SymbolKind.Module : SymbolKind.Interface
+				const selectionRange = new Range(line.range.start.translate(undefined, indent.length), line.range.end)
+				const children = this.parse(iter)
+
+				const range = new Range(line.range.start, iter.prev().range.end)
+				const symbol = new DocumentSymbol(name, line.text, symKind, range, selectionRange)
+				symbol.children = children
+				symbols.push(symbol)
+			} else if (match = line.text.match(/^(\s*)def\s*([^:]+):/)) {
+				const indent = match[1]
+				const name = match[2]
+
+				const range = new Range(line.range.start.translate(undefined, indent.length), line.range.end)
+				const symbol = new DocumentSymbol(name, line.text, SymbolKind.Method, range, range)
+				symbols.push(symbol)
+			}
+		}
+
+		return symbols
+	}
+
+	eachLine(document: TextDocument) {
+		let i = 0
+		let eof = false
+		let prev: TextLine;
+
+		return {
+			next: () => {
+				if (i < document.lineCount) {
+					prev = document.lineAt(i++);
+					return prev
+				} else {
+					eof = true;
+					return null;
+				}
+			},
+			eof: () => eof,
+			prev: () => prev,
+		}
+	}
+}
+
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
 		languages.registerOnTypeFormattingEditProvider(
 			'rbs',
 			new NewLineIndentProvider(),
 			"\n"
+		)
+	)
+
+	context.subscriptions.push(
+		languages.registerDocumentSymbolProvider(
+			{ language: "rbs" },
+			new RbsDocumentSymbolProvider()
 		)
 	)
 
