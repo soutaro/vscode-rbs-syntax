@@ -183,6 +183,14 @@
 				{
 					"name": "keyword.control.in.rbs",
 					"match": "\\b(in)\\b"
+				},
+				{
+					"name": "keyword.other.use.rbs",
+					"match": "\\b(use)\\b"
+				},
+				{
+					"name": "keyword.other.as.rbs",
+					"match": "\\b(as)\\b"
 				}
 			]
 		},
