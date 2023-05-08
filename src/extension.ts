@@ -14,6 +14,8 @@ import {
 	DocumentSymbolProvider,
 	SymbolKind,
 	DocumentSymbol,
+	workspace,
+	Disposable,
 } from 'vscode';
 
 class NewLineIndentProvider implements OnTypeFormattingEditProvider {
@@ -148,21 +150,56 @@ class RbsDocumentSymbolProvider implements DocumentSymbolProvider {
 	}
 }
 
+const features = {
+	documentSymbolProvider: undefined as Disposable | undefined,
+	onTypeFormattingEditProvider: undefined as Disposable | undefined,
+}
+
+function updateFeature(enabled: boolean, key: keyof typeof features, start: () => Disposable) {
+	if (enabled) {
+		if (!features[key]) {
+			console.log(`Starting ${key}...`)
+			features[key] = start()
+		}
+	} else {
+		const disposable = features[key]
+		if (disposable) {
+			console.log(`Shutting down ${key}...`)
+			disposable.dispose()
+			features[key] = undefined;
+		}
+	}
+}
+
+function updateDocumentSymbolProvider(enabled: boolean = workspace.getConfiguration("rbs-syntax").get<boolean>("enableDocumentSymbolProvider", true)) {
+	updateFeature(
+		enabled,
+		"documentSymbolProvider",
+		() => languages.registerDocumentSymbolProvider("rbs", new RbsDocumentSymbolProvider())
+	)
+}
+
+function updateOnTypeFormattingProvider(enabled: boolean = workspace.getConfiguration("rbs-syntax").get<boolean>("enableOnTypeFormattingProvider", true)) {
+	updateFeature(
+		enabled,
+		"onTypeFormattingEditProvider",
+		() => languages.registerOnTypeFormattingEditProvider('rbs', new NewLineIndentProvider(), "\n")
+	)
+}
+
+
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
-		languages.registerOnTypeFormattingEditProvider(
-			'rbs',
-			new NewLineIndentProvider(),
-			"\n"
-		)
+		workspace.onDidChangeConfiguration(event => {
+			if (event.affectsConfiguration("rbs-syntax")) {
+				updateDocumentSymbolProvider()
+				updateOnTypeFormattingProvider()
+			}
+		})
 	)
 
-	context.subscriptions.push(
-		languages.registerDocumentSymbolProvider(
-			{ language: "rbs" },
-			new RbsDocumentSymbolProvider()
-		)
-	)
+	updateDocumentSymbolProvider()
+	updateOnTypeFormattingProvider()
 
 	context.subscriptions.push(
 		languages.setLanguageConfiguration(
@@ -183,4 +220,7 @@ export function activate(context: ExtensionContext) {
 	)
 }
 
-export function deactivate() {}
+export function deactivate() {
+	updateDocumentSymbolProvider(false)
+	updateOnTypeFormattingProvider(false)
+}

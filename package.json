@@ -48,6 +48,21 @@
                 "editor.detectIndentation": false,
                 "editor.formatOnType": true
             }
+        },
+        "configuration": {
+            "title": "RBS Syntax",
+            "properties": {
+                "rbs-syntax.enableDocumentSymbolProvider": {
+                    "type": "boolean",
+                    "default": true,
+                    "markdownDescription": "Enable this for outline view, breadcrumbs, and go-to-symbol navigation inside a file for RBS files."
+                },
+                "rbs-syntax.enableOnTypeFormattingProvider": {
+                    "type": "boolean",
+                    "default": true,
+                    "markdownDescription": "Enable this for on-type formatting for RBS files."
+                }
+            }
         }
     },
     "scripts": {
