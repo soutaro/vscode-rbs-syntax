@@ -52,15 +52,15 @@
         "configuration": {
             "title": "RBS Syntax",
             "properties": {
-                "rbs-syntax.outlineView": {
+                "rbs-syntax.enableDocumentSymbolProvider": {
                     "type": "boolean",
                     "default": true,
-                    "markdownDescription": "Enable outline view for RBS files."
+                    "markdownDescription": "Enable this for outline view, breadcrumbs, and go-to-symbol navigation inside a file for RBS files."
                 },
-                "rbs-syntax.onTypeFormatting": {
+                "rbs-syntax.enableOnTypeFormattingProvider": {
                     "type": "boolean",
                     "default": true,
-                    "markdownDescription": "Enable on-type formatting for RBS files."
+                    "markdownDescription": "Enable this for on-type formatting for RBS files."
                 }
             }
         }

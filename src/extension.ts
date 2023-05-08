@@ -171,7 +171,7 @@ function updateFeature(enabled: boolean, key: keyof typeof features, start: () =
 	}
 }
 
-function updateDocumentSymbolProvider(enabled: boolean = workspace.getConfiguration("rbs-syntax").get<boolean>("outlineView", true)) {
+function updateDocumentSymbolProvider(enabled: boolean = workspace.getConfiguration("rbs-syntax").get<boolean>("enableDocumentSymbolProvider", true)) {
 	updateFeature(
 		enabled,
 		"documentSymbolProvider",
@@ -179,7 +179,7 @@ function updateDocumentSymbolProvider(enabled: boolean = workspace.getConfigurat
 	)
 }
 
-function updateOnTypeFormattingProvider(enabled: boolean = workspace.getConfiguration("rbs-syntax").get<boolean>("onTypeFormatting", true)) {
+function updateOnTypeFormattingProvider(enabled: boolean = workspace.getConfiguration("rbs-syntax").get<boolean>("enableOnTypeFormattingProvider", true)) {
 	updateFeature(
 		enabled,
 		"onTypeFormattingEditProvider",
