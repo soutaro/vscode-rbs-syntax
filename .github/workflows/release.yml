@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - env:
-        VSCE_PAT: ${{ secrets.VSCE_PAT }}
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
     - run:
         npm ci
     - run:
         npx vsce publish
+      env:
+        VSCE_PAT: ${{ secrets.VSCE_PAT }}
